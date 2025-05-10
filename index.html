@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marrakesh Escapade</title>
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --accent: #ff6b6b;
+            --accent-dark: #e05050;
+            --accent2: #ffd166;
+            --accent3: #06d6a0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('https://cdn.getyourguide.com/img/tour/5e0e519b1e0ed.jpeg/98.jpg') center/cover no-repeat;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent2);
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            font-size: 2rem;
+            color: var(--text-primary);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--accent);
+        }
+        
+        .day-container {
+            margin-bottom: 4rem;
+        }
+        
+        .day-header {
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .day-icon {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+        }
+        
+        .day-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .day-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--bg-secondary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 10px;
+        }
+        
+        .event {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            margin-bottom: 1.5rem;
+        }
+        
+        .event::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--accent);
+            border: 4px solid var(--bg-secondary);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .right {
+            left: 50%;
+        }
+        
+        .left::after {
+            right: -10px;
+        }
+        
+        .right::after {
+            left: -10px;
+        }
+        
+        .event-content {
+            padding: 20px;
+            background-color: var(--bg-secondary);
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .event-content:hover {
+            transform: translateY(-5px);
+        }
+        
+        .event-time {
+            font-weight: bold;
+            color: var(--accent2);
+            margin-bottom: 0.5rem;
+        }
+        
+        .event-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .event-description {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .event-price {
+            font-weight: bold;
+            color: var(--accent3);
+            margin-bottom: 0.5rem;
+        }
+        
+        .event-link {
+            display: inline-block;
+            background-color: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .event-link:hover {
+            background-color: var(--accent-dark);
+        }
+        
+        footer {
+            background-color: var(--bg-secondary);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .footer-text {
+            margin-bottom: 1rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .social-icon {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            color: var(--accent);
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-content {
+            background-color: var(--bg-secondary);
+            margin: 10% auto;
+            padding: 2rem;
+            width: 80%;
+            max-width: 700px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transform: translateY(-50px);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--accent);
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .modal-description {
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-detail {
+            background-color: var(--bg-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .modal-link {
+            display: inline-block;
+            background-color: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .modal-link:hover {
+            background-color: var(--accent-dark);
+        }
+        
+        /* Mobile responsiveness */
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .event {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .event::after {
+                left: 21px;
+            }
+            
+            .left::after, .right::after {
+                left: 21px;
+            }
+            
+            .right {
+                left: 0%;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 20% auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="home">
+        <div class="header-content">
+            <h1>Marrakesh Escapade</h1>
+            <p class="tagline">Experience the Magic of Morocco</p>
+        </div>
+        <div class="scroll-down" id="scrollDown">↓</div>
+    </header>
+    
+    <div class="container">
+        <h2 class="section-title">Your Itinerary</h2>
+        
+        <!-- Day 1 -->
+        <div class="day-container">
+            <div class="day-header">
+                <div class="day-icon">🌟</div>
+                <div>
+                    <h3 class="day-title">Day 1: Cultural Exploration & Glamorous Night Out</h3>
+                </div>
+            </div>
+            
+            <div class="timeline">
+                <!-- Breakfast -->
+                <div class="event left">
+                    <div class="event-content" data-event="breakfast">
+                        <div class="event-time">🕘 9:00 AM</div>
+                        <h4 class="event-title">Breakfast at the Riad</h4>
+                        <p class="event-description">Start your day with a delicious traditional Moroccan breakfast.</p>
+                    </div>
+                </div>
+                
+                <!-- Historical Tour -->
+                <div class="event right">
+                    <div class="event-content" data-event="historicaltour">
+                        <div class="event-time">🕙 10:00 AM</div>
+                        <h4 class="event-title">Historical Tour</h4>
+                        <p class="event-description">Bahia Palace, Saadian Tombs & Koutoubia Mosque</p>
+                        <p class="event-price">💰 £20 per person</p>
+                        <a href="https://www.getyourguide.com/marrakesh-l208/marrakech-bahia-palace-saadian-tombs-koutoubia-mosque-t348061/?ranking_uuid=a0f6add9-768b-433e-b204-8bdf1693dade
+                        " class="event-link">Book Now</a>
+                    </div>
+                </div>
+                
+                <!-- Lunch -->
+                <div class="event left">
+                    <div class="event-content" data-event="lunch1">
+                        <div class="event-time">🕐 1:00 PM</div>
+                        <h4 class="event-title">Lunch at Café des Épices</h4>
+                        <p class="event-description">Enjoy traditional Moroccan dishes in a vibrant setting.</p>
+                        <a href="#" class="event-link">View Menu</a>
+                    </div>
+                </div>
+                
+                <!-- Relaxation -->
+                <div class="event right">
+                    <div class="event-content" data-event="relaxation1">
+                        <div class="event-time">🕒 3:00 PM</div>
+                        <h4 class="event-title">Return to Riad for Relaxation</h4>
+                        <p class="event-description">Capture fun moments and relax before the evening activities.</p>
+                    </div>
+                </div>
+                
+                <!-- Sunset Cocktails -->
+                <div class="event left">
+                    <div class="event-content" data-event="cocktails">
+                        <div class="event-time">🕔 5:00 PM</div>
+                        <h4 class="event-title">Sunset Cocktails at El Fenn Rooftop</h4>
+                        <p class="event-description">Sip on cocktails while enjoying panoramic views of the Medina.</p>
+                        <a href="#" class="event-link">View Location</a>
+                    </div>
+                </div>
+                
+                <!-- Dinner -->
+                <div class="event right">
+                    <div class="event-content" data-event="dinner1">
+                        <div class="event-time">🕖 7:00 PM</div>
+                        <h4 class="event-title">Dinner at Le Jardin</h4>
+                        <p class="event-description">Dine amidst lush greenery in this serene oasis.</p>
+                        <a href="https://lejardinmarrakech.com
+                        " class="event-link">View Restaurant</a>
+                    </div>
+                </div>
+                
+                <!-- Night Out -->
+                <div class="event left">
+                    <div class="event-content" data-event="nightout">
+                        <div class="event-time">🕘 9:30 PM</div>
+                        <h4 class="event-title">Night Out at Buddha-Bar Marrakech</h4>
+                        <p class="event-description">Experience live entertainment and a vibrant atmosphere.</p>
+                        <a href="#" class="event-link">Check It Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 2 -->
+        <div class="day-container">
+            <div class="day-header">
+                <div class="day-icon">🌄</div>
+                <div>
+                    <h3 class="day-title">Day 2: Adventure & Spa Indulgence</h3>
+                </div>
+            </div>
+            
+            <div class="timeline">
+                <!-- Hot Air Balloon -->
+                <div class="event left">
+                    <div class="event-content" data-event="balloon">
+                        <div class="event-time">🕔 5:30 AM</div>
+                        <h4 class="event-title">Hot Air Balloon Ride</h4>
+                        <p class="event-description">Soar above Marrakesh and witness a breathtaking sunrise.</p>
+                        <p class="event-price">💰 £140 per person</p>
+                        <a href="https://www.getyourguide.com/en-gb/marrakesh-l208/ballooning-low-cost-flight-marrakech-t468535/?ranking_uuid=a1b204c9-ddb8-42d6-a68d-b2c7cf0d850f
+                        " class="event-link">Book Experience</a>
+                    </div>
+                </div>
+                
+                <!-- Brunch -->
+                <div class="event right">
+                    <div class="event-content" data-event="brunch">
+                        <div class="event-time">🕘 9:00 AM</div>
+                        <h4 class="event-title">Return to Riad for Brunch</h4>
+                        <p class="event-description">Relax and capture more memorable moments.</p>
+                    </div>
+                </div>
+                
+                <!-- Museums -->
+                <div class="event left">
+                    <div class="event-content" data-event="museums">
+                        <div class="event-time">🕛 12:00 PM</div>
+                        <h4 class="event-title">Visit Jardin Majorelle,Ysl and Berber Museums</h4>
+                        <p class="event-description">Explore the vibrant gardens and rich cultural exhibits.</p>
+                        <p class="event-price">💰 £33.90 per person</p>
+                        <a href=" https://www.getyourguide.com/marrakesh-l208/majorelle-garden-yves-saint-laurent-berber-museum-entry-t665852/?ranking_uuid=f3fe5fc4-9deb-4f6c-8554-204863117f9e
+                        " class="event-link">Book Tickets</a>
+                    </div>
+                </div>
+
+                <!-- Quad Bike Ride -->
+                <div class="event right">
+                    <div class="event-content" data-event="spa">
+                        <div class="event-time">🕒 3:00 PM</div>
+                        <h4 class="event-title">Quad Bike Adventure</h4>
+                        <p class="event-description">Experience the thrill of off-road riding through scenic desert trails.</p>
+                        <p class="event-price">💰 £25.43 per person</p>
+                        <a href=" https://www.getyourguide.com/en-gb/marrakesh-l208/sunset-view-magical-dinner-under-desert-agafay-starts-t480200/?ranking_uuid=7fec5013-a3a1-4643-95e6-4d042e1b77ef
+                        " class="event-link">Book Now</a>
+                    </div>
+                </div>
+                
+                <!-- Spa -->
+                <div class="event left">
+                    <div class="event-content" data-event="spa">
+                        <div class="event-time">🕒 5:00 PM</div>
+                        <h4 class="event-title">Spa Session at Les Bains de Marrakech</h4>
+                        <p class="event-description">Indulge in traditional hammam treatments and massages.</p>
+                        <p class="event-price">💰 £80–£100 per person</p>
+                        <a href="https://www.lesbainsdemarrakech.com/en/services
+                        " class="event-link">Book Treatment</a>
+                    </div>
+                </div>
+                
+                
+                <!-- Dinner -->
+                <div class="event right">
+                    <div class="event-content" data-event="dinner2">
+                        <div class="event-time">🕗 7:00 PM</div>
+                        <h4 class="event-title">Dinner at Nomad</h4>
+                        <p class="event-description">Savor modern Moroccan cuisine with rooftop views.</p>
+                        <a href="#" class="event-link">View Restaurant</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 3 -->
+        <div class="day-container">
+            <div class="day-header">
+                <div class="day-icon">🐪</div>
+                <div>
+                    <h3 class="day-title">Day 3: Camel Ride & Farewell Dinner</h3>
+                </div>
+            </div>
+            
+            <div class="timeline">
+                <!-- Camel Ride -->
+                <div class="event left">
+                    <div class="event-content" data-event="camel">
+                        <div class="event-time">🕘 9:00 AM</div>
+                        <h4 class="event-title">Camel Ride in Palmeraie</h4>
+                        <p class="event-description">Experience a traditional camel ride through the palm groves.</p>
+                        <p class="event-price">💰 £16 per person</p>
+                        <a href=" https://www.getyourguide.com/en-gb/marrakesh-l208/marrakech-camel-ride-in-the-oasis-palmeraie-t38164/?ranking_uuid=757619ee-ccc6-4139-9345-5abdae4f579f
+                        " class="event-link">Book Experience</a>
+                    </div>
+                </div>
+                
+                <!-- Lunch -->
+                <div class="event right">
+                    <div class="event-content" data-event="lunch3">
+                        <div class="event-time">🕒 1:00 PM</div>
+                        <h4 class="event-title">Lunch at Amal Women's Training Center</h4>
+                        <p class="event-description">Support a local initiative while enjoying delicious Moroccan dishes.</p>
+                        <a href="#" class="event-link">View Details</a>
+                    </div>
+                </div>
+                
+                <!-- Relaxation -->
+                <div class="event left">
+                    <div class="event-content" data-event="relaxation3">
+                        <div class="event-time">🕔 3:00 PM</div>
+                        <h4 class="event-title">Return to Riad for Relaxation</h4>
+                        <p class="event-description">Unwind and capture the last moments of your trip.</p>
+                    </div>
+                </div>
+                
+                <!-- Farewell Dinner -->
+                <div class="event right">
+                    <div class="event-content" data-event="farewell">
+                        <div class="event-time">🕗 7:00 PM</div>
+                        <h4 class="event-title">Farewell Dinner at Dar Yacout</h4>
+                        <p class="event-description">Conclude your trip with a lavish Moroccan feast.</p>
+                        <a href="#" class="event-link">View Restaurant</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">×</span>
+            <h3 class="modal-title" id="modalTitle">Event Title</h3>
+            <p class="modal-description" id="modalDescription">Event description goes here.</p>
+            <div class="modal-details" id="modalDetails">
+                <!-- Details will be populated dynamically -->
+            </div>
+            <a href="#" class="modal-link" id="modalLink" target="_blank">Book Now</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p class="footer-text">© 2025 Marrakesh Escapade | Your Ultimate Moroccan Adventure</p>
+        <div class="social-icons">
+            <a href="#" class="social-icon">📸</a>
+            <a href="#" class="social-icon">📱</a>
+            <a href="#" class="social-icon">✉️</a>
+        </div>
+    </footer>
+    
+    <script>
+        // Event data
+        const eventData = {
+            breakfast: {
+                title: "Breakfast at the Riad",
+                description: "Start your day with a delicious traditional Moroccan breakfast featuring fresh bread, jams, honey, olives, and mint tea in the peaceful courtyard of your riad.",
+                time: "9:00 AM",
+                duration: "1 hour",
+                included: "Included in stay",
+                link: "#"
+            },
+            historicaltour: {
+                title: "Historical Tour",
+                description: "Explore Marrakesh's rich history with a guided tour of iconic sites including the ornate Bahia Palace, ancient Saadian Tombs, and the magnificent Koutoubia Mosque. Learn about Moroccan architecture, culture, and traditions from a knowledgeable local guide.",
+                time: "10:00 AM",
+                duration: "3 hours",
+                price: "£20 per person",
+                link: "https://www.getyourguide.com/marrakech-l208/marrakech-half-day-guided-city-tour-t246003/"
+            },
+            lunch1: {
+                title: "Lunch at Café des Épices",
+                description: "Enjoy traditional Moroccan dishes in a vibrant setting overlooking the spice market. Try tagines, couscous, and refreshing mint tea while soaking in the lively atmosphere.",
+                time: "1:00 PM",
+                duration: "1.5 hours",
+                price: "£15-25 per person",
+                link: "https://www.tripadvisor.com/Restaurant_Review-g293734-d1159058-Reviews-Cafe_Des_Epices-Marrakech_Marrakech_Safi.html"
+            },
+            relaxation1: {
+                title: "Return to Riad for Relaxation & Content Creation",
+                description: "Take a break from sightseeing to relax at your riad. Capture fun moments for social media content and prepare for the evening's activities. The riad's peaceful atmosphere provides the perfect backdrop for both relaxation and creative content production.",
+                time: "3:00 PM",
+                duration: "2 hours",
+                included: "Included in stay",
+                link: "#"
+            },
+            cocktails: {
+                title: "Sunset Cocktails at El Fenn Rooftop",
+                description: "Sip on expertly crafted cocktails while enjoying panoramic views of the Medina and Atlas Mountains beyond. El Fenn's stylish rooftop offers the perfect setting to watch the sunset over Marrakesh with its signature pink-hued buildings.",
+                time: "5:00 PM",
+                duration: "2 hours",
+                price: "£10-15 per cocktail",
+                link: "https://el-fenn.com/rooftop/"
+            },
+            dinner1: {
+                title: "Dinner at Le Jardin",
+                description: "Dine amidst lush greenery in this serene oasis in the heart of the Medina. Le Jardin offers a blend of Moroccan and international cuisine in a magical garden setting illuminated by lanterns.",
+                time: "7:00 PM",
+                duration: "2 hours",
+                price: "£30-40 per person",
+                link: "https://www.instagram.com/lejardinmarrakech/"
+            },
+            nightout: {
+                title: "Night Out at Buddha-Bar Marrakech",
+                description: "Experience live entertainment and a vibrant atmosphere at this world-famous venue. Buddha-Bar offers an exotic fusion of music, cuisine and cocktails in a sumptuous setting.",
+                time: "9:30 PM",
+                duration: "Until late",
+                price: "Cover charge + drinks",
+                link: "https://buddhabar.com/en/buddha-bar-marrakech"
+            },
+            balloon: {
+                title: "Hot Air Balloon Ride",
+                description: "Soar above Marrakesh and witness a breathtaking sunrise from the sky. This unforgettable experience offers unique aerial views of the city, palmeries, and Atlas Mountains in the distance.",
+                time: "5:30 AM",
+                duration: "3-4 hours (including transport)",
+                price: "£140 per person",
+                link: "https://www.tripadvisor.com/AttractionProductReview-g293734-d11451675-Hot_Air_Balloon_Flight_over_Marrakech_with_Berber_Breakfast-Marrakech_Marrakech_Saf.html"
+            },
+            brunch: {
+                title: "Return to Riad for Brunch & Content Creation",
+                description: "Relax and enjoy a late brunch at your riad after the early morning balloon adventure. Take time to review and edit your sunrise content while enjoying fresh food and drinks in comfort.",
+                time: "9:00 AM",
+                duration: "3 hours",
+                included: "Included in stay",
+                link: "#"
+            },
+            museums: {
+                title: "Visit Jardin Majorelle & Museums",
+                description: "Explore the vibrant Jardin Majorelle with its iconic cobalt blue features, the Yves Saint Laurent Museum, and the Berber Museum. Learn about Moroccan culture, fashion history, and enjoy the spectacular botanical gardens.",
+                time: "12:00 PM",
+                duration: "3 hours",
+                price: "£33.90 per person",
+                link: "https://tickets.jardinmajorelle.com/en"
+            },
+            spa: {
+                title: "Spa Session at Les Bains de Marrakech",
+                description: "Indulge in traditional hammam treatments and massages at this luxurious spa. Experience authentic Moroccan wellness traditions including steam baths, exfoliation with black soap, and relaxing argan oil massages.",
+                time: "3:00 PM",
+                duration: "2 hours",
+                price: "£80–£100 per person",
+                link: "https://www.lesbainsdemarrakech.com/en/"
+            },
+            pool: {
+                title: "Return to Riad for Pool Party & Content Creation",
+                description: "Enjoy a fun-filled pool party at your riad. Create engaging content while relaxing by the pool with refreshing drinks and light snacks in the beautiful setting of your accommodation.",
+                time: "5:00 PM",
+                duration: "2 hours",
+                included: "Included in stay",
+                link: "#"
+            },
+            dinner2: {
+                title: "Dinner at Nomad",
+                description: "Savor modern Moroccan cuisine with rooftop views at this trendy restaurant. Nomad offers contemporary takes on traditional dishes, using fresh local ingredients in a stylish setting overlooking the spice market.",
+                time: "7:00 PM",
+                duration: "2 hours",
+                price: "£30-45 per person",
+                link: "https://www.tripadvisor.com/Restaurant_Review-g293734-d6375831-Reviews-Nomad-Marrakech_Marrakech_Safi.html"
+            },
+            camel: {
+                title: "Camel Ride in Palmeraie",
+                description: "Experience a traditional camel ride through the palm groves of Marrakesh. Travel like the nomads of old through the scenic Palmeraie area with its thousands of palm trees, providing great photo opportunities and a taste of desert life.",
+                time: "9:00 AM",
+                duration: "2 hours",
+                price: "£16 per person",
+                link: "https://www.getyourguide.com/marrakech-l208/camel-ride-in-the-palmeraie-of-marrakech-t23692/"
+            },
+            lunch3: {
+                title: "Lunch at Amal Women's Training Center",
+                description: "Support a local initiative while enjoying delicious Moroccan dishes at this non-profit organization that helps disadvantaged women through culinary training. The food is authentic, fresh, and prepared with care by the women in training.",
+                time: "1:00 PM",
+                duration: "2 hours",
+                price: "£15-25 per person",
+                link: "https://amalnonprofit.org/our-restaurant/"
+            },
+            relaxation3: {
+                title: "Return to Riad for Relaxation & Final Content Creation",
+                description: "Unwind and capture the last moments of your trip at your beautiful riad. Take time to relax by the pool, edit your favorite content from the journey, and prepare for your final evening in Marrakesh.",
+                time: "3:00 PM",
+                duration: "2 hours",
+                included: "Included in stay",
+                link: "#"
+            },
+            farewell: {
+                title: "Farewell Dinner at Dar Yacout",
+                description: "Conclude your trip with a lavish Moroccan feast at one of the city's most iconic restaurants. Dar Yacout offers traditional Moroccan cuisine in a magical setting, with multiple courses served in an atmospheric riad-style venue.",
+                time: "7:00 PM",
+                duration: "3 hours",
+                price: "£50-70 per person",
+                link: "https://www.tripadvisor.com/Restaurant_Review-g293734-d1103380-Reviews-Dar_Yacout-Marrakech_Marrakech_Safi.html"
+            }
+        };
+        
+        // Elements
+        const scrollDown = document.getElementById('scrollDown');
+        const modal = document.getElementById('eventModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalDetails = document.getElementById('modalDetails');
+        const modalLink = document.getElementById('modalLink');
+        const eventContents = document.querySelectorAll('.event-content');
+        
+        // Scroll down functionality
+        scrollDown.addEventListener('click', () => {
+            window.scrollTo({
+                top: window.innerHeight,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Modal functionality
+        function openModal(event) {
+            const eventId = this.getAttribute('data-event');
+            const event = eventData[eventId];
+            
+            if (event) {
+                modalTitle.textContent = event.title;
+                modalDescription.textContent = event.description;
+                
+                // Clear previous details
+                modalDetails.innerHTML = '';
+                
+                // Add event details
+                if (event.time) {
+                    const timeDetail = document.createElement('div');
+                    timeDetail.className = 'modal-detail';
+                    timeDetail.innerHTML = `<span>⏰</span> ${event.time}`;
+                    modalDetails.appendChild(timeDetail);
+                }
+                
+                if (event.duration) {
+                    const durationDetail = document.createElement('div');
+                    durationDetail.className = 'modal-detail';
+                    durationDetail.innerHTML = `<span>⌛</span> ${event.duration}`;
+                    modalDetails.appendChild(durationDetail);
+                }
+                
+                if (event.price) {
+                    const priceDetail = document.createElement('div');
+                    priceDetail.className = 'modal-detail';
+                    priceDetail.innerHTML = `<span>💰</span> ${event.price}`;
+                    modalDetails.appendChild(priceDetail);
+                }
+                
+                if (event.included) {
+                    const includedDetail = document.createElement('div');
+                    includedDetail.className = 'modal-detail';
+                    includedDetail.innerHTML = `<span>✓</span> ${event.included}`;
+                    modalDetails.appendChild(includedDetail);
+                }
+                
+                // Set link
+                if (event.link && event.link !== '#') {
+                    modalLink.style.display = 'inline-block';
+                    modalLink.href = event.link;
+                    
+                    // Customize button text based on event type
+                    if (event.title.includes('Tour') || event.title.includes('Visit') || 
+                        event.title.includes('Ride') || event.title.includes('Balloon')) {
+                        modalLink.textContent = 'Book Experience';
+                    } else if (event.title.includes('Lunch') || event.title.includes('Dinner') || 
+                               event.title.includes('Breakfast')) {
+                        modalLink.textContent = 'View Restaurant';
+                    } else if (event.title.includes('Spa')) {
+                        modalLink.textContent = 'Book Treatment';
+                    } else {
+                        modalLink.textContent = 'Learn More';
+                    }
+                } else {
+                    modalLink.style.display = 'none';
+                }
+                
+                // Show modal
+                modal.classList.add('active');
+            }
+        }
+        
+        function closeModalFunc() {
+            modal.classList.remove('active');
+        }
+        
+        // Add event listeners
+        eventContents.forEach(eventContent => {
+            eventContent.addEventListener('click', openModal);
+        });
+        
+        closeModal.addEventListener('click', closeModalFunc);
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModalFunc();
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModalFunc();
+            }
+        });
+        
+        // Animated scroll for timeline
+        function revealOnScroll() {
+            const events = document.querySelectorAll('.event');
+            const windowHeight = window.innerHeight;
+            
+            events.forEach(event => {
+                const eventTop = event.getBoundingClientRect().top;
+                
+                if (eventTop < windowHeight - 100) {
+                    event.style.opacity = '1';
+                    event.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // Initialize events with opacity 0
+        document.querySelectorAll('.event').forEach(event => {
+            event.style.opacity = '0';
+            event.style.transform = 'translateY(20px)';
+            event.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+        
+        // Check on load and scroll
+        window.addEventListener('load', revealOnScroll);
+        window.addEventListener('scroll', revealOnScroll);
+    </script>
+</body>
+</html>
